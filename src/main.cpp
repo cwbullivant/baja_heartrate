@@ -1,9 +1,18 @@
-#include <Arduino.h>
+// Author:         Garrett Vanhoy
+// Net ID:         gvanhoy
+// Date:
+//----------------------------------------------------------------------//
 
-void setup() {
-    // put your setup code here, to run once:
-}
+// TODO: Include appropriate files
 
-void loop() {
-    // put your main code here, to run repeatedly:
+
+int main(){
+
+  // TODO: initialize the LED
+
+  while(1){
+    // TODO: call the Test LED Function
+  }
+
+  return 0;
 }
