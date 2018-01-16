@@ -9,6 +9,7 @@
 int main(){
 
   // TODO: initialize the LED
+  int x = 0;
 
   while(1){
     // TODO: call the Test LED Function
