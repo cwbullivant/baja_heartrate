@@ -3,17 +3,27 @@
 // Date:
 //----------------------------------------------------------------------//
 
-// TODO: Include appropriate files
-
+#include <Arduino.h>
+#include "led.h"
+#include <avr/io.h>
+#include <util/delay.h>
 
 int main(){
 
-  // TODO: initialize the LED
-  int x = 0;
-  double y = 0;
+  initLED();
+
 
   while(1){
-    // TODO: call the Test LED Function
+    // armedState();
+    // unarmedState();
+    // standbyState();
+    // alarmState();
+    // frequency 18 kHz 1/10000
+
+    PORTH |= (1 << PORTH5);
+    // _delay_us(1);
+    // PORTH &= ~(1 << PORTH5);
+    // _delay_us(1000);
   }
 
   return 0;
