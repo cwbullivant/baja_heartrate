@@ -5,25 +5,61 @@
 
 #include <Arduino.h>
 #include "led.h"
+#include "speaker.h"
+#include "switch.h"
 #include <avr/io.h>
 #include <util/delay.h>
 
+typedef enum stateType_num{
+
+} stateType;
+
 int main(){
 
-  initLED();
+  Serial.begin(9600);
 
+  initLED();
+  initSpeaker();
+  initSwitches();
+  unsigned int state = 0;
 
   while(1){
-    // armedState();
-    // unarmedState();
-    // standbyState();
-    // alarmState();
-    // frequency 18 kHz 1/10000
+    switch(state){
+      case 0:
+        unarmedState();
+        if(!(PIND & (1 << PIND2))){
+          state = 1;
+          _delay_ms(1000);
+        }
+        break;
+      case 1:
+        unarmedState();
+        if(!(PIND & (1 << PIND1))){
+          state = 2;
+          _delay_ms(1000);
+        }
+        else if(!(PIND & (1 << PIND2))){
+          state = 0;
+          _delay_ms(1000);
+        }
+        break;
+      case 2:
+        standbyState();
+        _delay_ms(3000);
+        state = 3;
+        break;
+      case 3:
+        armedState();
+        if(!(PIND & (1 << PIND2))){
+          state = 4;
+        }
+        break;
+      case 4:
+        // alarmState();
+        chirp();
+        break;
+    }
 
-    PORTH |= (1 << PORTH5);
-    // _delay_us(1);
-    // PORTH &= ~(1 << PORTH5);
-    // _delay_us(1000);
   }
 
   return 0;

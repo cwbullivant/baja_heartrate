@@ -2,9 +2,9 @@
 // Net ID:         gvanhoy
 // Date:
 //----------------------------------------------------------------------//
-#ifndef SPEAKER_H
-#define SPEAKER_H
+#ifndef SWITCH_H
+#define SWITCH_H
 
-void initSpeaker();
-void chirp();
+void initSwitches();
+
 #endif
