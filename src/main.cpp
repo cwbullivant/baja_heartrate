@@ -20,55 +20,52 @@ int main(){
   // Serial.begin(9600);
 
   initLED();
-  // initSpeaker();
-  // initSwitches();
+  initSpeaker();
+  initSwitches();
   initTimer0();
 
   // PORTH |= (1 << PORTH5);
-  DDRB |= (1 << DDB7);
+  // DDRB |= (1 << DDB7);
   // PORTB |= (1 << PORTB7);
 
-  // unsigned int state x= 0;
+  unsigned int state = 0;
   while(1){
-    delaySecond();
-    PORTB ^= (1 << PORTB7);
-    // Serial.println("Tick");
-    // PORTB ^= (1 << PORTB7);
-    // switch(state){
-    //   case 0:
-    //     unarmedState();
-    //     if(!(PIND & (1 << PIND2))){
-    //       state = 1;
-    //       _delay_ms(1000);
-    //     }
-    //     break;
-    //   case 1:
-    //     unarmedState();
-    //     if(!(PIND & (1 << PIND1))){
-    //       state = 2;
-    //       _delay_ms(1000);
-    //     }
-    //     else if(!(PIND & (1 << PIND2))){
-    //       state = 0;
-    //       _delay_ms(1000);
-    //     }
-    //     break;
-    //   case 2:
-    //     standbyState();
-    //     _delay_ms(3000);
-    //     state = 3;
-    //     break;
-    //   case 3:
-    //     armedState();
-    //     if(!(PIND & (1 << PIND2))){
-    //       state = 4;
-    //     }
-    //     break;
-    //   case 4:
-    //     // alarmState();
-    //     chirp();
-    //     break;
-    // }
+    PORTH ^= (1 << PORTH4);
+    switch(state){
+      case 0:
+        unarmedState();
+        if(!(PIND & (1 << PIND2))){
+          state = 1;
+          delayMicro(1000000);
+        }
+        break;
+      case 1:
+        unarmedState();
+        if(!(PIND & (1 << PIND1))){
+          state = 2;
+          delayMicro(1000000);
+        }
+        else if(!(PIND & (1 << PIND2))){
+          state = 0;
+          delayMicro(1000000);
+        }
+        break;
+      case 2:
+        standbyState();
+        delayMicro(3000000);
+        state = 3;
+        break;
+      case 3:
+        armedState();
+        if(!(PIND & (1 << PIND2))){
+          state = 4;
+        }
+        break;
+      case 4:
+        // alarmState();
+        chirp();
+        break;
+    }
   }
 
   return 0;
