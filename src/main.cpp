@@ -12,61 +12,47 @@
 #include <util/delay.h>
 
 typedef enum stateType_num{
-
+  waitPress, dbPress, waitRelease, dbRelease
 } stateType;
+
+volatile stateType state = waitPress;
+volatile int count = 0;
 
 int main(){
 
-  // Serial.begin(9600);
-
   initLED();
-  initSpeaker();
+  // initSpeaker();
   initSwitches();
   initTimer0();
+  sei();
 
-  // PORTH |= (1 << PORTH5);
-  // DDRB |= (1 << DDB7);
-  // PORTB |= (1 << PORTB7);
-
-  unsigned int state = 0;
   while(1){
-    PORTH ^= (1 << PORTH4);
     switch(state){
-      case 0:
-        unarmedState();
-        if(!(PIND & (1 << PIND2))){
-          state = 1;
-          delayMicro(1000000);
+      case waitPress:
+        if(!(PIND & (1 << PIND3))){
+          state = dbPress;
+          turnOnTimer0();
         }
         break;
-      case 1:
-        unarmedState();
-        if(!(PIND & (1 << PIND1))){
-          state = 2;
-          delayMicro(1000000);
-        }
-        else if(!(PIND & (1 << PIND2))){
-          state = 0;
-          delayMicro(1000000);
+      case dbPress:
+        break;
+      case waitRelease:
+        if(PIND & (1 << PIND3)){
+          state = dbRelease;
+          turnOnTimer0();
+          PORTH ^= (1 << PORTH4);
         }
         break;
-      case 2:
-        standbyState();
-        delayMicro(3000000);
-        state = 3;
-        break;
-      case 3:
-        armedState();
-        if(!(PIND & (1 << PIND2))){
-          state = 4;
-        }
-        break;
-      case 4:
-        // alarmState();
-        chirp();
+      case dbRelease:
         break;
     }
   }
 
   return 0;
+}
+
+ISR(TIMER0_COMPA_vect){
+  turnOffTimer0();
+  if(state == dbPress) state = waitRelease;
+  else if(state == dbRelease) state = waitPress;
 }
