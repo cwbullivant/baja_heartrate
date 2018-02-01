@@ -29,19 +29,10 @@ int main(){
   while(1){
     switch(state){
       case waitPress:
-        if(!(PIND & (1 << PIND3))){
-          state = dbPress;
-          turnOnTimer0();
-        }
         break;
       case dbPress:
         break;
       case waitRelease:
-        if(PIND & (1 << PIND3)){
-          state = dbRelease;
-          turnOnTimer0();
-          PORTH ^= (1 << PORTH4);
-        }
         break;
       case dbRelease:
         break;
@@ -49,6 +40,20 @@ int main(){
   }
 
   return 0;
+}
+
+ISR(PCINT0_vect){
+  // put the flag low
+  PCIFR |= (1 << PCIF0);
+  if(state == waitPress){
+    turnOnTimer0();
+    state = dbPress;
+  }
+  else if(state == waitRelease){
+    state = dbRelease;
+    turnOnTimer0();
+    PORTH ^= (1 << PORTH4);
+  }
 }
 
 ISR(TIMER0_COMPA_vect){
