@@ -12,6 +12,8 @@ void initSwitches(){
 
   // this is comment
 
+  // another comment
+  
   // enabling pull-up resistor
   PORTD |= (1 << PORTD2) | (1 << PORTD1) | (1 << PORTD0);
 
