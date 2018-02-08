@@ -13,3 +13,7 @@ void initSwitches(){
   // enabling pull-up resistor
   PORTD |= (1 << PORTD3) | (1 << PORTD2) | (1 << PORTD1);
 }
+
+void print(){
+
+}
