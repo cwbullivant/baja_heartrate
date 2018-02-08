@@ -8,8 +8,15 @@
 
 void initSwitches(){
   // input
+<<<<<<< HEAD
   DDRD &= ~((1 << DDD2) | (1 << DDD1);
 
+=======
+  DDRD &= ~((1 << DDD3) | (1 << DDD1));
+
+  // another comment
+
+>>>>>>> master
   // enabling pull-up resistor
   PORTD |= (1 << PORTD2) | (1 << PORTD1) | (1 << PORTD0);
 
