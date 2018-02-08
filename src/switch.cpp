@@ -16,3 +16,7 @@ void initSwitches(){
   // enable interrupt
   EIMSK |= (1 << INT2) | (1 << INT1) | (1 << INT0);
 }
+
+void print(){
+
+}

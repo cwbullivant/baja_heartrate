@@ -6,5 +6,6 @@
 #define SWITCH_H
 
 void initSwitches();
+void print();
 
 #endif
