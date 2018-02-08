@@ -8,14 +8,11 @@
 
 void initSwitches(){
   // input
-  DDRD &= ~((1 << DDD2) | (1 << DDD1));
-  DDRB &= ~(1 << DDB3);
+  DDRD &= ~((1 << DDD2) | (1 << DDD1) | (1 << DDD0));
 
   // enabling pull-up resistor
-  PORTD |= ((1 << PORTD2) | (1 << PORTD1));
-  PORTB |= (1 << PORTB3);
+  PORTD |= (1 << PORTD2) | (1 << PORTD1) | (1 << PORTD0);
 
   // enable interrupt
-  PCICR |= (1 << PCIE0);
-  PCMSK0 |= (1 << PCINT3);
+  EIMSK |= (1 << INT2) | (1 << INT1) | (1 << INT0);
 }

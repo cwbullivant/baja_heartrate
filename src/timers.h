@@ -8,6 +8,7 @@
 void initTimer0();
 void turnOffTimer0();
 void turnOnTimer0();
+void initTimer1();
 
 // void delayMicro(unsigned long int delay);
 
