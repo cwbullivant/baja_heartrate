@@ -2,9 +2,10 @@
 // Net ID:         gvanhoy
 // Date:
 //----------------------------------------------------------------------//
-#ifndef SWITCH_H
-#define SWITCH_H
 
-void initSwitches();
+#ifndef ADC_H
+#define ADC_H
+
+void initADC();
 
 #endif
