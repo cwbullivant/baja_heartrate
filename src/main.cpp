@@ -6,9 +6,11 @@
 #include <Arduino.h>
 #include "led.h"
 #include "speaker.h"
-#include "switch.h"
-#include "timers.h"
-#include "adc.h"
+#include "timer.h"
+#include "sensor.h"
+#include "lcd.h"
+#include "i2c.h"
+#include "spi.h"
 #include <avr/io.h>
 #include <util/delay.h>
 
@@ -30,7 +32,6 @@ int main(){
   // initTimer0();
   // initTimer1();
   Serial.begin(9600);
-  initADC();
   unsigned int adcVal;
   // sei();
 

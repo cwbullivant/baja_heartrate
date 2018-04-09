@@ -3,10 +3,31 @@
 // Date:
 //----------------------------------------------------------------------//
 
-#include "timers.h"
+#include "timer.h"
 #include <avr/io.h>
 #include <Arduino.h>
 
+void initTimer1() {
+  //this sets CTC mode for 16 bit timer 1
+  TCCR1A &= ~((1 << WGM11) | (1 << WGM10));
+  TCCR1B |= (1 << WGM12);
+  TCCR1B &= ~(1 << WGM13);
+}
+
+void delayUs(unsigned int delay){
+if(delay > 32767){delay = 32767;}
+  OCR1A = delay*2; //set top to 2 * delay, where delay is number of Us
+  TIFR1 |= (1 << OCF1A);  //reset flag
+  TCNT1 = 0; //reset count
+  TCCR1B |= (1<< CS11); //set prescalar to 8
+  TCCR1B &= ~((1 << CS12) | (1 << CS10)); //set prescalar to 8
+      while(!(TIFR1 & (1<<OCF1A))); //do nothing until isr
+      TIFR1 |= (1 << OCF1A); //clear isr
+  TCCR1B &= ~(1 << CS12 | 1 << CS11 | 1 << CS10); //turn off timer
+}
+
+
+/*
 void initTimer1(){
   // sets CTC Mode
   TCCR1B |= (1 << WGM12);
@@ -76,3 +97,4 @@ void turnOffTimer0(){
 //   TIFR0 |= (1 << OCF0A);            // put the flag down
 //   TCCR0B &= ~((1 << CS02) | (1 << CS01) | (1 << CS00));
 // }
+*/

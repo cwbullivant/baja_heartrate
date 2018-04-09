@@ -9,7 +9,7 @@ void initTimer0();
 void turnOffTimer0();
 void turnOnTimer0();
 void initTimer1();
-
+void delayUs(unsigned int delay);
 // void delayMicro(unsigned long int delay);
 
 #endif
