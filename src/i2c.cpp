@@ -71,7 +71,7 @@ void sendData(unsigned char addr, unsigned char data) {
 }
 
 void receiveData(unsigned char addr, unsigned char data) {
-  i2cInt i2c_s = start;
+  i2cInternal i2c_s = start;
   unsigned char twint = TWSR & 0xF8;
   while (i2c_s != stop) {
     switch(i2c_s) {
@@ -88,9 +88,11 @@ void receiveData(unsigned char addr, unsigned char data) {
       case stop:
         break;
     }
-    if () {
-
+    if (i2c_S != stop) {
+      while (!(TWCR & (1 << TWINT)));
+      if (twint == 0x00 || twint == 0x38) {
+        i2c_s = start;
+      }
     }
-    while
   }
 }
